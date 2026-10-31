@@ -1,0 +1,55 @@
+﻿=== Login sebagai:
+ current_user  | session_user  
+---------------+---------------
+ data_engineer | data_engineer
+(1 row)
+
+=== [OK] CREATE TABLE
+CREATE TABLE
+=== [OK] MODIFY: ALTER TABLE ADD COLUMN
+ALTER TABLE
+                     Table "SALAM.krs_test"
+ Column |         Type          | Collation | Nullable | Default 
+--------+-----------------------+-----------+----------+---------
+ id     | integer               |           | not null | 
+ nim    | character varying(10) |           |          | 
+ matkul | character varying(50) |           |          | 
+ sks    | smallint              |           |          | 3
+Indexes:
+    "krs_test_pkey" PRIMARY KEY, btree (id)
+Foreign-key constraints:
+    "krs_test_nim_fkey" FOREIGN KEY (nim) REFERENCES "SALAM".mahasiswas(nim)
+
+=== [OK] CRUD pada tabel baru
+INSERT 0 1
+ id |    nim     |        matkul        | sks 
+----+------------+----------------------+-----
+  1 | 1247050086 | Manajemen Basis Data |   3
+(1 row)
+
+UPDATE 1
+DELETE 1
+=== [OK] CRUD pada tabel mahasiswas
+INSERT 0 1
+UPDATE 1
+    nim     |     nama      | ipk  
+------------+---------------+------
+ 1247050666 | Engineer Test | 3.40
+(1 row)
+
+DELETE 1
+=== [OK] CREATE VIEW, lalu MODIFY (ALTER) tabel yang sudah ada
+CREATE VIEW
+ALTER TABLE
+ALTER TABLE
+=== [OK] DROP object
+DROP VIEW
+DROP TABLE
+=== Verifikasi: object uji sudah hilang, tabel utama tetap ada
+                 List of relations
+ Schema |       Name       | Type  |     Owner     
+--------+------------------+-------+---------------
+ SALAM  | audit_mahasiswas | table | data_engineer
+ SALAM  | mahasiswas       | table | data_engineer
+(2 rows)
+

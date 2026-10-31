@@ -1,0 +1,52 @@
+﻿=== Login sebagai:
+ current_user | session_user 
+--------------+--------------
+ bi_dev       | bi_dev
+(1 row)
+
+=== [OK] SELECT tabel
+ id |    nim     |             nama             | ipk  | status 
+----+------------+------------------------------+------+--------
+  1 | 1247050086 | Muhammad Haikal Fadhil Imani | 3.80 | aktif
+  2 | 1247050001 | Sari Wulandari               | 3.45 | aktif
+  3 | 1247050002 | Budi Santoso                 | 2.90 | aktif
+  4 | 1247050003 | Dewi Lestari                 | 3.10 | cuti
+  5 | 1247050004 | Andi Pratama                 | 3.62 | lulus
+(5 rows)
+
+=== [OK] SELECT view (dengan predikat IPK)
+    nim     |             nama             | ipk  |     predikat     | status 
+------------+------------------------------+------+------------------+--------
+ 1247050086 | Muhammad Haikal Fadhil Imani | 3.80 | Dengan Pujian    | aktif
+ 1247050004 | Andi Pratama                 | 3.62 | Dengan Pujian    | lulus
+ 1247050001 | Sari Wulandari               | 3.45 | Sangat Memuaskan | aktif
+ 1247050003 | Dewi Lestari                 | 3.10 | Sangat Memuaskan | cuti
+ 1247050002 | Budi Santoso                 | 2.90 | Memuaskan        | aktif
+(5 rows)
+
+=== [OK] Agregasi untuk BI
+     predikat     | jumlah | rata_ipk 
+------------------+--------+----------
+ Dengan Pujian    |      2 |     3.71
+ Sangat Memuaskan |      2 |     3.28
+ Memuaskan        |      1 |     2.90
+(3 rows)
+
+=== [ERROR] INSERT -> permission denied
+=== [ERROR] UPDATE -> permission denied
+=== [ERROR] DELETE -> permission denied
+docker : psql:/tests/03_bi.sql:19: ERROR:  permission denied for table mahasiswas
+At line:4 char:10
++ $biOut = docker exec postgres_muhammad-haikal-fadhil-imani sh -c "PGP ...
++          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (psql:/tests/03_...able mahasiswas:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+psql:/tests/03_bi.sql:22: ERROR:  permission denied for table mahasiswas
+psql:/tests/03_bi.sql:25: ERROR:  permission denied for table mahasiswas
+=== [ERROR] CREATE TABLE -> permission denied for schema SALAM
+psql:/tests/03_bi.sql:28: ERROR:  permission denied for schema SALAM
+LINE 1: CREATE TABLE "SALAM".coba_bi (id INT);
+                     ^
+=== [ERROR] DROP VIEW -> must be owner
+psql:/tests/03_bi.sql:31: ERROR:  must be owner of view v_mahasiswa_ringkas

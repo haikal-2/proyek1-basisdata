@@ -1,0 +1,4 @@
+# Rahasia: jangan di-commit (pakai .env.example sebagai template)
+.env
+*.log
+.DS_Store

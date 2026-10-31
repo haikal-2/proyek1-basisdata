@@ -1,0 +1,65 @@
+﻿=== Login sebagai:
+ current_user | session_user 
+--------------+--------------
+ backend_dev  | backend_dev
+(1 row)
+
+=== [OK] CREATE (INSERT)
+ id |    nim     |     nama     | ipk  
+----+------------+--------------+------
+ 36 | 1247050777 | Backend Test | 3.00
+(1 row)
+
+INSERT 0 1
+=== [OK] READ (SELECT)
+ id |    nim     |     nama     | ipk  
+----+------------+--------------+------
+ 36 | 1247050777 | Backend Test | 3.00
+(1 row)
+
+=== [OK] UPDATE
+    nim     | ipk  |          updated_at           
+------------+------+-------------------------------
+ 1247050777 | 3.75 | 2026-10-31 13:16:54.414965+00
+(1 row)
+
+UPDATE 1
+=== [OK] Transaksi: UPDATE lalu ROLLBACK (semester kembali semula)
+BEGIN
+UPDATE 1
+    nim     | semester_dalam_transaksi 
+------------+--------------------------
+ 1247050777 |                        6
+(1 row)
+
+ROLLBACK
+    nim     | semester_setelah_rollback 
+------------+---------------------------
+ 1247050777 |                         5
+(1 row)
+
+=== [OK] DELETE
+DELETE 1
+=== [OK] Jejak audit otomatis (db_user = backend_dev)
+ audit_id |             waktu             |   db_user   |  aksi  |    nim     
+----------+-------------------------------+-------------+--------+------------
+       15 | 2026-10-31 13:16:54.418536+00 | backend_dev | DELETE | 1247050777
+       13 | 2026-10-31 13:16:54.414965+00 | backend_dev | UPDATE | 1247050777
+       12 | 2026-10-31 13:16:54.410212+00 | backend_dev | INSERT | 1247050777
+       11 | 2026-10-31 13:16:43.792446+00 | postgres    | DELETE | 1247050999
+(4 rows)
+
+=== [ERROR] CREATE TABLE -> permission denied for schema SALAM
+=== [ERROR] ALTER TABLE -> must be owner
+docker : psql:/tests/02_backend.sql:34: ERROR:  permission denied for schema SALAM
+At line:2 char:15
++ ... ackendOut = docker exec postgres_muhammad-haikal-fadhil-imani sh -c " ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (psql:/tests/02_...or schema SALAM:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+LINE 1: CREATE TABLE "SALAM".coba_backend (id INT);
+                     ^
+psql:/tests/02_backend.sql:37: ERROR:  must be owner of table mahasiswas
+=== [ERROR] DROP TABLE -> must be owner
+psql:/tests/02_backend.sql:40: ERROR:  must be owner of table mahasiswas

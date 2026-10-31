@@ -1,0 +1,3 @@
+﻿NAME                                    IMAGE                   COMMAND                  SERVICE    CREATED         STATUS                   PORTS
+pgadmin_muhammad-haikal-fadhil-imani    dpage/pgadmin4:latest   "/entrypoint.sh"         pgadmin    6 minutes ago   Up 6 minutes             127.0.0.1:44086->80/tcp
+postgres_muhammad-haikal-fadhil-imani   postgres:15             "docker-entrypoint.sΓÇª"   postgres   6 minutes ago   Up 6 minutes (healthy)   127.0.0.1:22086->5432/tcp
